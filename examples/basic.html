@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>chartjs-chart-ridgeline</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        max-width: 760px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+      }
+      .chart {
+        position: relative;
+        height: 420px;
+      }
+      form {
+        display: grid;
+        grid-template-columns: max-content 1fr 3rem;
+        gap: 0.5rem 1rem;
+        align-items: center;
+        margin-top: 1.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Ridgeline chart</h1>
+
+    <div class="chart"><canvas id="chart"></canvas></div>
+
+    <form id="controls">
+      <label for="overlap">overlap</label>
+      <input id="overlap" name="overlap" type="range" min="0" max="4" step="0.1" value="1.5" />
+      <output></output>
+
+      <label for="spacing">spacing</label>
+      <input id="spacing" name="spacing" type="range" min="0.5" max="3" step="0.1" value="1" />
+      <output></output>
+
+      <label for="amplitude">amplitude</label>
+      <input id="amplitude" name="amplitude" type="range" min="0.2" max="2" step="0.1" value="1" />
+      <output></output>
+
+      <label for="colors">colors</label>
+      <select id="colors" name="colors">
+        <option value="single">single color</option>
+        <option value="multi">one color per ridge</option>
+      </select>
+    </form>
+
+    <!-- Run `npm install && npm run build` first -->
+    <script src="../node_modules/chart.js/dist/chart.umd.js"></script>
+    <script src="../dist/index.umd.js"></script>
+    <script>
+      const { RidgelineController, RidgeElement } = ChartRidgeline;
+      Chart.register(RidgelineController, RidgeElement);
+
+      const palette = ['255, 99, 132', '75, 192, 192', '255, 205, 86'];
+      const colors = {
+        single: {
+          backgroundColor: 'rgba(54, 162, 235, 0.7)',
+          borderColor: 'rgb(54, 162, 235)',
+        },
+        multi: {
+          backgroundColor: palette.map((rgb) => `rgba(${rgb}, 0.7)`),
+          borderColor: palette.map((rgb) => `rgb(${rgb})`),
+        },
+      };
+
+      const chart = new Chart(document.getElementById('chart'), {
+        type: 'ridgeline',
+        data: {
+          labels: ['Group A', 'Group B', 'Group C'],
+          datasets: [
+            {
+              label: 'Distribution',
+              data: [
+                [12, 15, 18, 22, 25, 30, 32],
+                [18, 20, 23, 24, 29, 35, 38],
+                [10, 12, 15, 17, 19, 21, 24],
+              ],
+              ...colors.single,
+            },
+          ],
+        },
+        options: {
+          maintainAspectRatio: false,
+          scales: {
+            x: { title: { display: true, text: 'Observation' } },
+          },
+        },
+      });
+
+      const form = document.getElementById('controls');
+      const sync = () => {
+        const dataset = chart.data.datasets[0];
+        for (const name of ['overlap', 'spacing', 'amplitude']) {
+          const input = form.elements[name];
+          dataset[name] = Number(input.value);
+          input.nextElementSibling.value = input.value;
+        }
+        Object.assign(dataset, colors[form.elements.colors.value]);
+        chart.update();
+      };
+      form.addEventListener('input', sync);
+      sync();
+    </script>
+  </body>
+</html>

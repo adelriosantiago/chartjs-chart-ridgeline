@@ -1,0 +1,58 @@
+{
+  "name": "chartjs-chart-ridgeline",
+  "version": "0.1.0",
+  "description": "Chart.js chart type that renders ridgeline (joyplot) charts: stacked, smooth, filled distributions",
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "unpkg": "dist/index.umd.js",
+  "jsdelivr": "dist/index.umd.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "vite build && tsc -p tsconfig.build.json",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run typecheck && npm test && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adelriosantiago/chartjs-plugin-ridgeline.git"
+  },
+  "keywords": [
+    "chart.js",
+    "chartjs",
+    "chart",
+    "ridgeline",
+    "joyplot",
+    "ridgeline-plot",
+    "distribution"
+  ],
+  "author": "adelriosantiago",
+  "license": "MIT",
+  "peerDependencies": {
+    "chart.js": "^4.0.0"
+  },
+  "bugs": {
+    "url": "https://github.com/adelriosantiago/chartjs-plugin-ridgeline/issues"
+  },
+  "homepage": "https://github.com/adelriosantiago/chartjs-plugin-ridgeline#readme",
+  "devDependencies": {
+    "@napi-rs/canvas": "^1.2.0",
+    "chart.js": "^4.6.1",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.8",
+    "vitest": "^5.1.1"
+  }
+}
