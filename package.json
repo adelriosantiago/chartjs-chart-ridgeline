@@ -1,0 +1,31 @@
+{
+  "name": "chartjs-chart-ridgeline",
+  "version": "1.0.0",
+  "description": "Ridgeline plots for Chart.js",
+  "type": "module",
+  "main": "./dist/chartjs-chart-ridgeline.js",
+  "module": "./dist/chartjs-chart-ridgeline.js",
+  "browser": "./dist/chartjs-chart-ridgeline.umd.js",
+  "types": "./types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "browser": "./dist/chartjs-chart-ridgeline.umd.js",
+      "import": "./dist/chartjs-chart-ridgeline.js"
+    }
+  },
+  "files": ["dist", "types", "README.md", "LICENSE"],
+  "scripts": {
+    "build": "rollup -c",
+    "test": "node --test"
+  },
+  "peerDependencies": {
+    "chart.js": ">=4.0.0"
+  },
+  "devDependencies": {
+    "chart.js": "^4.6.1",
+    "rollup": "^4.0.0"
+  },
+  "license": "MIT",
+  "keywords": ["chart.js", "chartjs", "ridgeline", "ridge plot", "visualization"]
+}
